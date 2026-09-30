@@ -1,6 +1,5 @@
 (function () {
-  const VAULT_URL = 'assets/p.751747a64526.bin';
-  const SESSION_KEY = 'doc-session';
+  const VAULT_URL = 'assets/p.cac07615278b.bin';
   const form = document.getElementById('gate');
   const input = document.getElementById('pw');
   const submit = document.getElementById('submit');
@@ -193,7 +192,6 @@
     html = html.replace('<script src="assets/i18n.js"></script>', '<script>' + i18n + '</script>');
     html = html.replace('<script src="assets/report.js"></script>', '<script>' + report + '</script>');
     html = rewrite(html, 'index.html', urls);
-    sessionStorage.setItem(SESSION_KEY, password);
     showDocument(html);
   }
 
@@ -210,33 +208,29 @@
     } catch (e) {}
   }
 
+  form.noValidate = true;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    setError('');
+    const password = input.value;
+    if (!password) {
+      setError('Введите пароль');
+      input.focus();
+      return;
+    }
+    try {
+      await unlock(password);
+    } catch (e) {
+      submit.disabled = false;
+      setStatus('');
+      setError(e.code === 'bad-password' ? 'Неверный пароль' : 'Не удалось открыть документ');
+    }
+  });
+
   async function start() {
     input.focus();
+    try { sessionStorage.removeItem('doc-session'); } catch (e) {}
     await clearLeftovers();
-    const saved = sessionStorage.getItem(SESSION_KEY);
-    if (saved) {
-      setStatus('Открываем документ…');
-      try {
-        await unlock(saved);
-        return;
-      } catch (e) {
-        sessionStorage.removeItem(SESSION_KEY);
-        submit.disabled = false;
-        setStatus('');
-        setError('Сессия истекла. Введите пароль ещё раз.');
-      }
-    }
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      setError('');
-      try {
-        await unlock(input.value);
-      } catch (e) {
-        submit.disabled = false;
-        setStatus('');
-        setError(e.code === 'bad-password' ? 'Неверный пароль' : 'Не удалось открыть документ');
-      }
-    });
   }
 
   start();
