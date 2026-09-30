@@ -1,5 +1,5 @@
 (function () {
-  const VAULT_URL = 'assets/p.471054b2faf1.bin';
+  const VAULT_URL = 'assets/p.751747a64526.bin';
   const SESSION_KEY = 'doc-session';
   const form = document.getElementById('gate');
   const input = document.getElementById('pw');
@@ -150,7 +150,7 @@
   function showDocument(html) {
     const frame = document.createElement('iframe');
     frame.title = 'Документ';
-    frame.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff';
+    frame.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;background:#f3efe6';
     frame.srcdoc = html;
     frame.addEventListener('load', () => {
       try {

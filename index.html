@@ -6,18 +6,23 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light">
+<meta name="theme-color" content="#17140f">
 <title>Закрытый документ</title>
 <style>
   :root {
-    --bg: #f6f8fb;
-    --text: #0f1b2d;
-    --muted: #4a5568;
-    --navy: #0b1f3a;
-    --blue: #1d4ed8;
-    --border: #d8dee8;
-    --red: #b91c1c;
-    --red-bg: #fef2f2;
-    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --paper: #f3efe6;
+    --paper-2: #fbf9f4;
+    --ink: #17140f;
+    --ink-2: #3f3b33;
+    --ink-3: #6b665b;
+    --rule: #d6cfbf;
+    --signal: #d9401a;
+    --signal-deep: #a92e0f;
+    --bad: #b8281a;
+    --bad-bg: #f6dad3;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --mono: "Cascadia Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   * { box-sizing: border-box; }
   body {
@@ -26,66 +31,85 @@
     display: grid;
     place-items: center;
     padding: 1.5rem;
-    font-family: var(--font);
-    color: var(--text);
-    background:
-      radial-gradient(900px 420px at 10% -10%, rgba(37, 99, 235, 0.08), transparent 55%),
-      linear-gradient(180deg, #fafbfd 0%, var(--bg) 100%);
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
   }
   .card {
-    width: min(420px, 100%);
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(15, 27, 45, 0.08);
-    padding: 1.75rem 1.5rem 1.5rem;
+    position: relative;
+    width: min(440px, 100%);
+    background: var(--paper-2);
+    border: 1px solid var(--ink);
+    border-top: 4px solid var(--ink);
+    border-radius: 3px;
+    box-shadow: 8px 8px 0 var(--rule);
+    padding: 2rem 1.75rem 1.6rem;
   }
-  h1 { margin: 0 0 .5rem; font-size: 1.35rem; color: var(--navy); letter-spacing: -0.02em; }
-  p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.5; }
-  form { margin-top: 1.25rem; display: grid; gap: .75rem; }
-  label { font-size: .85rem; font-weight: 600; color: var(--navy); }
+  .tag {
+    display: flex; align-items: center; gap: .55rem; margin-bottom: 1.1rem;
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .tag::before { content: ""; width: .55rem; height: .55rem; background: var(--signal); }
+  h1 { margin: 0 0 .6rem; font-family: var(--serif); font-size: 1.9rem; line-height: 1.1; letter-spacing: -.02em; }
+  p { margin: 0; color: var(--ink-2); font-size: .95rem; line-height: 1.55; }
+  form { margin-top: 1.5rem; display: grid; gap: .7rem; }
+  label { font-family: var(--mono); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
   input {
     width: 100%;
     font: inherit;
-    padding: .7rem .8rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    font-family: var(--mono);
+    letter-spacing: .08em;
+    padding: .75rem .85rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
     background: #fff;
-    color: var(--text);
+    color: var(--ink);
   }
-  input:focus { outline: 2px solid rgba(29, 78, 216, .35); border-color: var(--blue); }
-  .row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+  input:focus { outline: 2px solid var(--signal); outline-offset: 0; border-color: var(--ink); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .2rem; }
   button {
-    font: inherit;
-    font-weight: 650;
+    font-family: var(--mono);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     border: 0;
-    border-radius: 10px;
-    padding: .7rem 1rem;
-    background: var(--navy);
+    border-radius: 2px;
+    padding: .75rem 1.15rem;
+    background: var(--signal);
     color: #fff;
     cursor: pointer;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   }
-  button:disabled { opacity: .6; cursor: progress; }
+  button:hover { background: var(--signal-deep); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+  button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  button:disabled { opacity: .6; cursor: progress; transform: none; }
   button.ghost {
     background: transparent;
-    color: var(--blue);
+    color: var(--ink);
     padding: 0;
-    font-weight: 600;
-    font-size: .85rem;
+    box-shadow: none;
+    font-size: .7rem;
+    text-decoration: underline;
+    text-decoration-color: var(--signal);
+    text-underline-offset: .25em;
   }
+  button.ghost:hover { background: transparent; color: var(--signal-deep); transform: none; box-shadow: none; }
   .err {
     margin: 0;
-    padding: .65rem .75rem;
-    border-radius: 10px;
-    background: var(--red-bg);
-    color: var(--red);
+    padding: .65rem .8rem;
+    border-left: 3px solid var(--bad);
+    background: var(--bad-bg);
+    color: var(--bad);
     font-size: .9rem;
   }
-  .status { min-height: 1.25rem; font-size: .9rem; color: var(--muted); }
+  .status { min-height: 1.25rem; font-family: var(--mono); font-size: .76rem; color: var(--ink-3); }
 </style>
 </head>
 <body>
   <main class="card">
+    <div class="tag">Доступ по паролю</div>
     <h1>Закрытый документ</h1>
     <p>Введите пароль, чтобы открыть документ. Проверка выполняется только в этом браузере, пароль никуда не отправляется.</p>
     <form id="gate" autocomplete="off">
@@ -100,6 +124,6 @@
     </form>
   </main>
   <noscript><p>Чтобы открыть документ, включите JavaScript.</p></noscript>
-  <script src="assets/u.471054b2faf1.js"></script>
+  <script src="assets/u.751747a64526.js"></script>
 </body>
 </html>
